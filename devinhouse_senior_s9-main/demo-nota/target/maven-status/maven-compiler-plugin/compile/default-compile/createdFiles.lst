@@ -1,0 +1,7 @@
+com\example\demo\Caderno.class
+com\example\demo\repository\NotaRepository.class
+com\example\demo\DemoApplication.class
+com\example\demo\Nota.class
+com\example\demo\NotaController.class
+com\example\demo\repository\CrudRepository.class
+com\example\demo\ErrodeValidacaoHandler.class

@@ -1,0 +1,9 @@
+com\example\demo\controller\HelloController.class
+com\example\demo\DemoApplication.class
+com\example\demo\repository\CursoRepository.class
+com\example\demo\service\CrudService.class
+com\example\demo\model\Saudacao.class
+com\example\demo\model\Curso.class
+com\example\demo\repository\CrudRepository.class
+com\example\demo\service\CursoService.class
+com\example\demo\controller\CursoController.class
