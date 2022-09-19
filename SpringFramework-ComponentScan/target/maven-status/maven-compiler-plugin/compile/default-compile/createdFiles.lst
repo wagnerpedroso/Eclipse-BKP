@@ -1,0 +1,5 @@
+model\Course.class
+service\CourseService.class
+service\CrudService.class
+Application.class
+config\AppConfig.class
