@@ -1,0 +1,217 @@
+
+/*CRIAR BANCO DE DADOS*/
+
+CREATE DATABASE banking;
+
+/*CRIAR TABELAS*/
+
+CREATE TABLE cliente(
+  id SERIAL NOT NULL,
+  nome_completo varchar(100) DEFAULT NULL,
+  primeiro_nome varchar(30) DEFAULT NULL,
+  sobrenome varchar(70) DEFAULT NULL,
+  cpf BIGINT DEFAULT NULL,
+  data_nascimento date DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO cliente VALUES (1,'Andre Dorneles','Andre','Dorneles',61122233344,'1980-12-07'),(2,'Santiago Rodrigues Gilberto','Santiago','Rodrigues Gilberto',71122233344,'1984-09-15'),(3,'Andressa Santos Scheifer','Andressa','Santos Scheifer',81122233344,'1998-02-10'),(4,'Helena Silva','Helena','Silva',91122233344,'1973-05-30'),(5,'João Borges','João','Borges',11122233340,'1992-07-22'),(6,'Vanessa Luz','Vanessa','Luz',11122233341,'1995-04-01'),(7,'Rosa Amorim','Rosa','Amorim',11122233342,'1989-07-11'),(8,'Cristiano Machado','Cristiano','Machado',11122233343,'2000-01-29'),(9,'Estefani Silveira','Estefani','Silveira',11122233344,'1994-12-17'),(10,'Samanta Fagundes','Samanta','Fagundes',11122233345,'1987-10-05'),(11,'Camila Marques','Camila','Marques',11122233346,'1997-09-30'),(12,'Orlando Souza','Orlando','Souza',11122233347,'2001-02-20'),(13,'Renata Correia','Renata','Correia',11122233348,'1996-04-10'),(14,'Gabriel Borba','Gabriel','Borba',11122233349,'1978-08-30');
+
+CREATE TABLE conta(
+  id SERIAL NOT NULL,
+  cliente_id int DEFAULT NULL,
+  tipo_id int DEFAULT NULL,
+  categoria_id int DEFAULT NULL,
+  valor bigint DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO conta VALUES (1,9,1,1,24700),(2,11,3,4,5000),
+(3,14,3,3,50450),(4,6,3,2,5600),(5,8,2,1,4500),
+(6,6,3,4,128500),(7,2,1,1,2999),(8,5,2,1,103649),
+(9,7,3,3,20000),(10,10,3,4,1000),(11,13,3,2,19498),
+(12,4,3,3,1500),(13,12,3,2,54999),(14,1,1,1,5499);
+
+CREATE TABLE conta_categoria (
+  id SERIAL NOT NULL,
+  nome varchar(30) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO conta_categoria VALUES (1,'básica'),(2,'prata'),(3,'ouro'),(4,'diamante');
+
+CREATE TABLE conta_servicos (
+  id SERIAL NOT NULL PRIMARY KEY,
+  categoria_id int DEFAULT NULL,
+  nome varchar(60) DEFAULT NULL,
+  quantidade int DEFAULT '1',
+  taxa bigint DEFAULT NULL
+  );
+  
+INSERT INTO conta_servicos VALUES (1,1,'cadastro de conta',1,0),(2,1,'saque caixa eletronico',1,0),
+(3,1,'extrato caixa eletronico',99,0),(4,1,'extrato online',99,0),(5,1,'atendimento fone',99,0),
+(6,2,'cadastro de conta',1,1999),(7,2,'saque caixa eletronico',6,50),(8,2,'extrato caixa eletronico',99,0),
+(9,2,'extrato online',99,0),(10,2,'atendimento fone',99,0),(11,2,'atendimento 24/7',99,0),
+(12,2,'cartão de débito',99,499),(13,2,'pix',99,0),(14,3,'cadastro de conta',1,499),
+(15,3,'saque caixa eletronico',10,0),(16,3,'extrato caixa eletronico',99,0),(17,3,'extrato online',99,0),
+(18,3,'atendimento 24/7',99,0),(19,3,'cartão de débito',1,499),(20,3,'pix',99,0),
+(21,3,'internet banking',99,0),(22,3,'cartão de crédito',1,499),(23,3,'seguro de automóvel',1,79999),
+(24,3,'limite pré aprovado R$ 5.000,00',1,0),(25,4,'cadastro de conta',1,2999),(26,4,'saque caixa eletronico',99,0),
+(27,4,'extrato caixa eletronico',99,0),(28,4,'extrato online',99,0),(29,4,'atendimento 24/7',99,0),
+(30,4,'cartão de débito',99,0),(31,4,'pix',99,0),(32,4,'internet banking',99,0),
+(33,4,'cartão de crédito',3,0),(34,4,'previdência privada',12,49999),(35,4,'limite pré aprovado R$ 50.000,00',1,0),
+(36,4,'seguro de automóvel',3,199999),(37,4,'seguro de vida',12,4999),(38,4,'desconto em viagens',12,999),
+(39,4,'título de capitalização',12,9999),(40,4,'consórcio automotivo',3,399999);
+
+CREATE TABLE conta_tipo (
+  id SERIAL NOT NULL,
+  nome varchar(40) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO conta_tipo VALUES (1,'conta-salário'),(2,'conta-poupança'),(3,'conta-corrente');
+
+CREATE TABLE movimento (
+  id SERIAL NOT NULL PRIMARY KEY,
+  tipo_id int,
+  conta_id int DEFAULT NULL,
+  valor bigint DEFAULT NULL,
+  status_id int NOT NULL DEFAULT '0',
+  cadastrado_em TIMESTAMP,
+  atualizado_em TIMESTAMP
+);
+
+INSERT INTO movimento VALUES (1,2,14,1999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(2,10,14,1999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(3,4,5,4500,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(4,5,4,5600,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(5,7,8,4999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(6,5,10,1000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(7,9,10,60000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(8,2,1,5000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(9,5,3,450,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(10,6,4,1500,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(11,3,6,3500,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(12,8,7,2500,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(13,3,3,50000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(14,2,1,10000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(15,1,2,5000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(16,10,2,1999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(17,6,12,140000,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(18,1,12,5000,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(19,9,12,6300,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(20,8,8,1999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(21,3,8,1999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(22,8,9,5000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(23,1,7,2999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(24,1,6,10000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(25,7,5,199,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(26,2,7,1999,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(27,2,11,9999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(28,7,13,5000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(29,5,13,9999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(30,2,11,2999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(31,2,12,1500,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(32,10,14,1999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(33,9,5,750000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(34,6,4,75000000,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(35,9,14,250,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(36,3,13,45000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(37,8,9,8000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(38,2,8,150000,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(39,7,13,6000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(40,2,9,5000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(41,9,7,1400,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(42,1,4,50000,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(43,8,3,45000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(44,6,6,10000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(45,3,8,500,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(46,7,9,1999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(47,6,2,15000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(48,9,14,2999,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(49,3,9,15000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(50,8,6,3000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(51,1,14,3500,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(52,2,1,1200,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(53,3,6,15000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(54,4,8,150,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(55,5,11,6500,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(56,6,12,4500,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(57,7,12,3500,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(58,8,12,1200,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(59,9,12,1100,2,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(60,10,6,1999,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(61,2,8,6500,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(62,3,6,10000000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(63,4,8,95000,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(64,7,4,15000,0,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(65,8,3,4500,0,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(66,9,2,3500,0,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(67,4,2,15000,0,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(68,5,1,8500,1,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(69,6,8,1999,0,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(70,1,3,1500,0,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(71,1,6,1999,0,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(72,1,6,5000,0,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(73,2,12,150000,0,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(74,3,13,60000,0,'2021-03-26 12:22:31','2021-03-26 12:22:31'),(75,6,13,15000,0,'2021-03-26 12:22:31','2021-03-26 12:22:31');
+
+CREATE TABLE movimento_status (
+  id int NOT NULL  PRIMARY KEY,
+  nome varchar(20) DEFAULT NULL
+);
+
+INSERT INTO movimento_status VALUES (0,'pendente'),(1,'sucesso'),(2,'falha');
+
+CREATE TABLE movimento_tipo (
+  id int NOT NULL  PRIMARY KEY,
+  nome varchar(50) DEFAULT NULL
+);
+
+INSERT INTO movimento_tipo VALUES (1,'entrada de fundos - transferência'),
+(2,'entrada de fundos - depósito'),(3,'entrada de fundos - pix'),
+(4,'entrada de fundos - cobrança'),(5,'entrada de fundos - estorno'),
+(6,'saída de fundos - transferência'),(7,'saída de fundos - saque'),
+(8,'saída de fundos - pix'),(9,'saída de fundos - pagamento de boleto'),
+(10,'saída de fundos - taxa de operação bancária');
+
+/*Questão número 1*/
+SELECT nome_completo AS "Cliente", data_nascimento AS "Data de nascimento", age(data_nascimento) AS "Idade"
+FROM cliente;
+
+SELECT nome_completo AS "Cliente", data_nascimento AS "Data de nascimento", to_char(age(data_nascimento),'yy anos') AS "Idade"
+FROM cliente;
+
+SELECT nome_completo AS "Cliente", data_nascimento AS "Data de nascimento", to_char(age(data_nascimento),'yy') AS "Idade"
+FROM cliente;
+
+/*Questão número 2*/ /*L9G99999G990D99 L-símbolo da moeda(utiliza o idioma local), G-específicação de dígitos, G-separador de grupos(milhar, dezena,centena)(utiliza o idioma local), D-Ponto Decimal(utiliza o idioma local)*/
+SELECT cliente.nome_completo AS "Cliente", cliente.cpf AS "Documento", to_char (conta.valor, 'L9G99999G990D99') AS "Valor", conta.id AS "Id Conta"
+FROM cliente
+INNER JOIN conta
+ON cliente.id = conta.cliente_id
+ORDER BY conta.valor DESC;
+
+
+/*Questão número 3*/
+
+SELECT conta_tipo.nome AS "Tipo de conta",COUNT(conta.id) AS "Total" 
+FROM conta
+INNER JOIN conta_tipo
+ON conta_tipo.id = conta.tipo_id
+WHERE conta_tipo.id = 2
+GROUP BY conta_tipo.nome;
+
+/*Questão número 4*/
+
+SELECT conta_categoria.nome AS "Categoria",COUNT(conta.id) AS "Total" 
+FROM conta
+INNER JOIN conta_categoria
+ON conta_categoria.id = conta.categoria_id
+WHERE conta_categoria.id = 3
+GROUP BY conta_categoria.nome;
+
+/*Questão 5*/
+
+SELECT conta_categoria.nome AS "Categoria",COUNT(conta_servicos.id) AS "Total" 
+FROM conta_categoria
+INNER JOIN conta_servicos
+ON conta_categoria.id = conta_servicos.categoria_id
+WHERE conta_categoria.id = 4
+GROUP BY conta_categoria.nome;
+
+/*Questão 6*/
+
+SELECT movimento_status.nome, COUNT(movimento.status_id)
+FROM movimento_status
+INNER JOIN movimento
+ON movimento.status_id = movimento_status.id
+WHERE movimento_status.id = 2
+GROUP BY movimento_status.nome;
+
+SELECT movimento_status.nome, COUNT(movimento.status_id)
+FROM movimento_status
+INNER JOIN movimento
+ON movimento.status_id = movimento_status.id
+WHERE movimento_status.id = 0
+GROUP BY movimento_status.nome;
+
+SELECT movimento_status.nome, COUNT(movimento.status_id)
+FROM movimento_status
+INNER JOIN movimento
+ON movimento.status_id = movimento_status.id
+GROUP BY movimento_status.nome;
+
+SELECT * FROM movimento_tipo;
+
+------------------------------------------------------------
+/*QUERYS GRAFANA*/
+
+select * from cliente;
+
+alter table cliente add column sexo CHAR(1);
+
+UPDATE cliente
+SET sexo = 'M'
+WHERE id in (1,2,5,8,12,14);
+
+UPDATE cliente
+SET sexo = 'F'
+WHERE id in (3,4,6,7,9,10,11,13);
+
+
+/*quantidade de clientes*/
+
+select COUNT(id)
+from cliente;
+
+/*selecionar clientes + tipo de conta*/
+
+SELECT cliente.id, cliente.nome_completo, cliente.cpf, cliente.sexo, conta.valor, conta_categoria.nome 
+FROM cliente
+INNER JOIN conta
+ON cliente.id = conta.cliente_id
+INNER JOIN conta_categoria
+ON conta.categoria_id = conta_categoria.id;
+
+Select cliente.sexo, count(sexo) 
+from cliente
+group by sexo;
+
+SELECT conta_categoria.nome, count(cliente.id) 
+FROM cliente
+INNER JOIN conta
+ON cliente.id = conta.cliente_id
+INNER JOIN conta_categoria
+ON conta.categoria_id = conta_categoria.id
+group by conta_categoria.id;
+
+select sum(valor)
+from conta;

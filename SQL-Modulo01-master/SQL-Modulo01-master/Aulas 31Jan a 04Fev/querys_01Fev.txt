@@ -1,0 +1,68 @@
+/*QUERYS MAIS UTILIZADAS*/
+
+SELECT * FROM alunos WHERE idAluno = 10;
+SELECT nomeAluno, cidadeAluno FROM alunos WHERE cidadeAluno = 10;
+SELECT nomeAluno FROM alunos WHERE idAluno IN (13,5,9,7,22);
+
+SELECT * FROM alunos WHERE idadeAluno > 30; /*SELECIONA MAIOR QUE*/
+SELECT * FROM alunos WHERE idadeAluno < 30; /*SELECIONA MENOR QUE*/
+SELECT * FROM alunos WHERE idadeAluno BETWEEN 30 AND 40; /*SELECIONA ENTRE INTERVALO*/
+
+SELECT * FROM alunos ORDER BY idadeAluno DESC;
+
+SELECT * FROM alunos WHERE nomeAluno LIKE 'P%'; /*SELECIONA REGISTROS QUE COMECEM COM A LETRA*/
+SELECT * FROM alunos WHERE nomeAluno LIKE '%P'; /*SELECIONA REGISTROS QUE TERMINEM COM A LETRA*/
+SELECT * FROM alunos WHERE nomeAluno LIKE '%P%'; /*SELECIONA REGISTROS QUE CONTENHAM*/
+
+SELECT MAX (idadeAluno) FROM alunos; /*SELECIONA IDADE MÁXIMA*/
+SELECT MIN (idadeAluno) FROM alunos; /*SELECIONA IDADE MÍNIMA*/
+SELECT AVG (idadeAluno) FROM alunos; /*SELECIONA MÉDIA*/
+SELECT SUM (idadeAluno) FROM alunos; /*SOMA IDADES*/
+SELECT COUNT (idAluno) FROM alunos; /*CONTA QUANTOS REGISTROS TEM*/
+ 
+
+
+/*CRIANDO TABELAS EM BANCO DE DADOS COM CHAVE PRIMARY KEY E COM CHAVE ESTRANGEIRA*/
+
+CREATE TABLE aluno (
+	idAluno serial NOT NULL PRIMARY KEY,
+	nomeAluno VARCHAR(100) NOT NULL, 
+	idadeAluno INTEGER, 
+	cidadeAluno VARCHAR(40), 
+	estadoAluno CHAR(2)
+	);
+
+	CREATE TABLE curso (
+	idCurso serial NOT NULL,
+	nomeCurso VARCHAR(40),
+	idAluno INTEGER,
+	PRIMARY KEY (idCurso),
+	FOREIGN KEY (idAluno) REFERENCES alunos(idAluno)
+	);
+
+
+/*INSERINDO DADOS NAS TABELAS*/
+
+INSERT INTO aluno (nomeAluno,idadeAluno,cidadeAluno,estadoAluno)
+VALUES ('Gerald',31,'Floripa','SC'),('Mark', 24,'Palhoça','SC'),('William',35,'Porto Alegre','RS');
+
+INSERT INTO curso (nomeCurso,idAluno)
+VALUES ('Programação',1),('Design',2),('Marketing',3);
+
+
+SELECT * FROM aluno;
+SELECT * FROM curso;
+SELECT * FROM aluno WHERE idAluno = 2;
+SELECT * FROM curso WHERE idAluno = 2;
+
+
+SELECT aluno.idAluno, aluno.nomeAluno, aluno.idadeAluno, curso.nomeCurso 
+FROM aluno 
+INNER JOIN curso 
+ON aluno.idAluno = curso.idAluno;
+
+
+SELECT aluno.idAluno AS ID, aluno.nomeAluno AS NOME, aluno.idadeAluno, curso.nomeCurso 
+FROM aluno 
+INNER JOIN curso 
+ON aluno.idAluno = curso.idAluno;

@@ -1,0 +1,37 @@
+CREATE TABLE alunos (
+	idAluno SERIAL NOT NULL,
+	nomeAluno VARCHAR(100) NOT NULL,
+	idadeAluno INTEGER,
+	cidadeAluno VARCHAR(40),
+	estadoAluno CHAR(2)
+);
+
+SELECT * FROM alunos;
+
+INSERT INTO alunos (nomeAluno, idadeAluno, cidadeAluno, estadoAluno) 
+VALUES ('Ana Paula', 37, 'São José', 'SC'),
+('Diego Oliveira', 34, 'Contagem', 'MG'),
+('Leonardo Almeida', 26, 'São Paulo', 'SP'),
+('Guilherme Luciano Fortes', 26, 'Alvorada', 'RS'),
+('Gabriel', 18, 'Blumenau', 'SC'),
+('Rodrigo Lewandowski', 41, 'Florianópolis', 'SC'),
+('Jordy Felipe da Silva', 28, 'Blumenau', 'SC'),
+('Luã Forbici', 33, 'Blumenau', 'SC'),
+('Augusto Cesar', 32, 'Caucaia', 'CE'),
+('Eduarda Santanna', 23, 'Porto Alegre', 'RS'),
+('Rafael Junkes', 22, 'Blumenau', 'SC'),
+('Thiago Peres', 26, 'São Bernardo do Campo', 'SP'),
+('Douglas', 24, 'Florianópolis', 'SC'),
+('Rafael Chaves', 37, 'Juiz de Fora', 'MG'),
+('Wagner Pedroso', 27, 'São José', 'SC'),
+('Leônidas Moritz Rosa', 26, 'Blumenau', 'SC'),
+('Eduardo Gonzaga de Amorim', 34, 'São José', 'SC'),
+('Rafael Domingos', 28, 'Campo Limpo Paulista', 'SP'),
+('Renan Pinho', 32, 'Rio de Janeiro', 'RJ'),
+('Murillo Henryque de Paula Silva', 26, 'Valinhos', 'SP'),
+('Renan Pinho', 32, 'Rio de Janeiro', 'RJ'),
+('Murillo Henryque de Paula Silva', 26, 'Valinhos', 'SP'),
+('Ricardo Beltrame', 41, 'Salto', 'SP'),
+('Edwanderson', 27, 'São Bernardo do Campo', 'SP'),
+('Allan Pereira', 38, 'Lages', 'SC'),
+('Valeria Guevara', 20, 'São Sebastião', 'DF');

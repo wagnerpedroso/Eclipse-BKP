@@ -1,0 +1,55 @@
+create table sabores ( id serial, nome varchar(100), PRIMARY KEY (id) ); 
+create table massas ( id serial PRIMARY KEY, tipo varchar(100) );
+create table bordas ( id serial PRIMARY KEY, tipo varchar(100) ); 
+
+create table status ( id serial PRIMARY KEY, tipo varchar(100) ); 
+
+create table pizzas ( 
+	id serial PRIMARY KEY, 
+	borda_id serial references bordas(id), 
+	massa_id serial references massas(id) 
+); 
+
+
+
+create table pizza_sabor ( 
+	id serial not null PRIMARY KEY, 
+	pizzas_id serial,  
+	sabores_id serial , 
+	foreign key (pizzas_id) references pizzas(id), 
+	foreign key (sabores_id) references sabores(id) 
+); 
+
+create table pedidos ( id serial PRIMARY KEY, pizzas_id serial references pizzas(id), status_id serial references status(id) );
+
+
+insert into sabores (nome) values ('calabresa');
+insert into sabores (nome) values ('4 queijos');
+insert into sabores (nome) values ('sensação');
+insert into sabores (nome) values ('bacon');
+
+insert into massas (tipo) values ('tradicional');
+insert into massas (tipo) values ('integral');
+insert into bordas (tipo) values ('chocolate preto');
+
+insert into bordas (tipo) values ('chocolate branco');
+insert into bordas (tipo) values ('chocolate preto e branco');
+
+insert into pizzas (borda_id, massa_id) values (1, 2), (2, 1);
+
+insert into pizza_sabor (pizzas_id, sabores_id) values (1, 2), (2, 1);
+
+insert into pedidos (pizzas_id, status_id) values (1, 3), (2, 4);
+
+
+
+insert into status (tipo) values ('recebido'), ('em preparação'), ('concluído'), ('saiu para entrega');
+
+insert into bordas (tipo) values ('cheedar'), ('catupiry'), ('requeijão');
+
+
+
+
+
+
+

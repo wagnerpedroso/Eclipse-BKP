@@ -1,0 +1,78 @@
+
+/*CRIANDO O BANCO DE DADOS*/
+CREATE DATABASE empresa;
+
+
+/*CRIANDO AS TABELAS*/
+
+CREATE TABLE cargos (
+	id_cargo serial NOT NULL PRIMARY KEY,
+	nome_cargo VARCHAR(40) NOT NULL 
+	);
+
+CREATE TABLE gestores (
+	id_gestor serial NOT NULL PRIMARY KEY,
+	nome_gestor VARCHAR(40) NOT NULL 
+	);
+
+CREATE TABLE empregados (
+	id_emp serial NOT NULL,
+	nome_emp VARCHAR(40),	
+	cidade_emp VARCHAR(100),
+	idade_emp INTEGER,
+	id_cargo INTEGER,
+	id_gestor INTEGER,
+	PRIMARY KEY (id_emp),
+	FOREIGN KEY (id_cargo) REFERENCES cargos(id_cargo),
+	FOREIGN KEY (id_gestor) REFERENCES gestores(id_gestor)
+	);
+
+
+/*INSERINDO REGISTROS*/
+
+INSERT INTO cargos (nome_cargo) 
+VALUES ('Auxiliar Administrativo'),('Assistente de Produtos'),('Analista de Sistemas'),('Coordenador de equipe');
+
+INSERT INTO gestores (nome_gestor) 
+VALUES ('Anderson Figueiredo'),('Roberto Antunes'),('Israel Nascimento'),('Junior Santos');
+
+INSERT INTO empregados (nome_emp,cidade_emp,idade_emp,id_cargo,id_gestor) 
+VALUES ('Leonardo Vieira','Porto Alegre',25,2,3),('Antonio Nunes','Floripa',28,1,2),('Israel Fernandes','Goiânia',30,2,2),
+('Francisco Vieira','Itapema',22,3,4),('Fernando Santos','Joinville',25,2,3);
+
+
+/*APLICANDO INNER JOIN*/
+
+SELECT empregados.id_emp, empregados.nome_emp, cargos.nome_cargo, gestores.nome_gestor
+FROM empregados
+INNER JOIN cargos 
+ON empregados.id_cargo = cargos.id_cargo
+INNER JOIN gestores
+ON empregados.id_gestor = gestores.id_gestor;
+
+/*APLICANDO COUNT COM GROUP BY E INNER JOIN*/
+
+SELECT gestores.nome_gestor, COUNT (empregados.id_emp) 
+FROM empregados
+INNER JOIN gestores
+ON empregados.id_gestor = gestores.id_gestor
+GROUP BY gestores.nome_gestor;
+
+/*APLICANDO ALIAS PRA DEIXAR A SAÍDA MAIS ORGANIZADO*/
+
+SELECT gestores.nome_gestor AS "GESTOR DA ÁREA", COUNT (empregados.id_emp) AS "TOTAL DE FUNCIONÁRIOS" 
+FROM empregados
+INNER JOIN gestores
+ON empregados.id_gestor = gestores.id_gestor
+GROUP BY gestores.nome_gestor;
+
+UPDATE cargos
+SET nome_cargo = 'Desenvolvedor Java'
+WHERE id_cargo = 4;
+
+SELECT * FROM cargos;
+
+
+ALTER TABLE empregados RENAME endereco_emp TO cidade_emp;
+
+select * from empregados;

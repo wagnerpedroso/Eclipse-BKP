@@ -1,0 +1,95 @@
+--criando tabela e inserindo dados para responder o DESAFIO final slide aula 04
+
+create table empregado (
+	id serial, 
+	nome varchar(30), 
+	salario int,
+	supervisor varchar(30), 
+	primary key (id)
+);
+
+select * from empregado
+
+insert into empregado (nome, salario, supervisor) values ('diogo', 2000, 'carlos'), 
+('gabriel', 5000, 'joao'), ('sérgio', 15000, 'patrick'), ('ana', 7500, 'carlos'), 
+('abigail', 3000, 'joao'), ('joana', 24000, 'patrick'), ('felipe', 2300, 'carlos'), 
+('edson', 1500, 'joao'), ('roberta', 6000, 'patrick');
+
+-CONTINUAÇÃO JOINS
+--left join com banco pizzaria. Mais pizzas do que pedidos gerados:
+
+
+--trazer todas as pizzas inclusive as com pedido gerado.  
+select * 
+from pizzas left join pedidos on pedidos.pizzas_id = pizzas.id
+
+
+-- sabores que nao foram associados a um pedido / ou pizza; 
+select *
+from pizza_sabor
+inner join pizzas on pizzas.id = pizza_sabor.pizzas_id
+inner join pedidos on pedidos.pizzas_id = pizzas.id
+right join sabores on pizza_sabor.sabores_id = sabores.id
+where pizza_sabor.pizzas_id is null
+
+-- para facilitar testes, abaixo os selects:
+
+select * from pizza_sabor
+select * from sabores
+select * from pedidos
+
+select pedidos.id as NumPedido, sabores.nome as Sabor, bordas.tipo as borda, massas.tipo as massa, status.tipo as status
+from pizzas inner join bordas on pizzas.borda_id = bordas.id
+			inner join massas on pizzas.massa_id = massas.id
+			inner join pizza_sabor on pizzas.id = pizza_sabor.pizzas_id
+			inner join sabores on pizza_sabor.sabores_id = sabores.id
+			inner join pedidos on pizzas.id = pedidos.pizzas_id
+			inner join status on pedidos.status_id = status.id
+
+--CORREÇÃO EXERCÍCIO 2 TRELLO
+
+select * 
+from tabelaa full join tabelab on tabelaa.nome = tabelab.nome
+where tabelaa.nome is null or tabelab.nome is null
+
+--UNION, INTERSECT E EXCEPT
+
+--RESULTADO DE UNION SEMELHANTE AO FULL JOIN 
+select * from x
+union 
+select * from y
+
+-UNION trazendo valores duplicados caso existam
+select * from x
+union all
+select * from y
+
+select pk from x
+intersect
+select pk from y
+
+-- dados que estão apenas em X. Sem dados do Y ou que fazem junção com Y:
+
+select pk from x 
+except
+select pk from y
+
+
+-- VIEW: atendente da pizzaria saber o ID do pedido e seu status pelo nome, apenas.  
+
+--criando view
+create view view_pedidos as select * from pedidos
+
+-criando nova view com join e abstraindo do usuario os nomes das colunas e tabelas físicas. 
+create view view_pedidos_v3 as select pedidos.id as identificador, status.tipo as status from pedidos, status where pedidos.status_id = status.id
+
+--fazendo consulta em uma view
+select * from view_pedidos_v3
+
+--testando uma atualização da view
+insert into pedidos (pizzas_id, status_id, datapedido) values (1,5, '20220210')
+
+--excluindo uma view
+drop view view_pedidos_v2
+
+

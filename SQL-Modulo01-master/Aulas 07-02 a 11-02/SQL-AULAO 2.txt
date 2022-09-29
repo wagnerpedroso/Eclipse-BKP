@@ -1,0 +1,101 @@
+/* mais exemplos com comando ALTER - rename de tabela obs: atenção com as FK que referenciam a tabela renomeada */
+
+alter table status rename to status_pedido 
+
+/* alterando o nome de uma coluna. No caso, de bordas para tipo_bordas na tabela bordas. 
+alter table bordas rename tipo_bordas to bordas
+
+
+
+/* contornando o problema adicionando nova CONSTRAINT (restrição) na chave estrangeira de pedidos. 
+
+alter table pedidos
+add foreign key (status_id) references status(id) on delete cascade on update cascade
+
+/* testando a alteração feita com UPDATE
+
+update status set id=5
+where id=4
+
+/* testando a alteração feita com DELETE
+
+delete from status where id = 3
+
+
+/* excluíndo tabela em modo cascade. obs: atenção com as FK que referenciam a tabela renomeada */
+
+drop table status cascade
+
+
+/* recriando e inserindo dados na tabela status */
+
+create table status ( id serial PRIMARY KEY, tipo varchar(100) ); 
+insert into status (tipo) values ('recebido'), ('em preparação'), ('concluído'), ('saiu para entrega');
+
+
+
+
+/* Impedindo inserção de valores duplicados na tabela já criada. 
+
+
+alter table bordas 
+add unique (bordas)
+
+/* testando... */
+
+insert into bordas (bordas) values ('chocolate preto')
+
+
+
+select * from bordas
+
+insert into massas (tipo) values ('tradicional')
+insert into massas (tipo) values ('integral')
+
+select * from bordas
+
+
+delete from bordas 
+insert into bordas (bordas) values ('cheedar')
+
+/*  retornando ID do registro novo apos inserção na tabela
+
+insert into bordas (bordas) values ('chocolate preto') 
+RETURNING id
+
+/* COMEÇO DE SELECT. AlGUMAS QUERY COM FILTROS DE LINHAS. CONTINUAÇÃO NA PRÓXIMA AULA
+
+select * from status where tipo like '%c%'
+
+
+select pedidos.status_id, status.tipo
+from pedidos, status
+where pedidos.status_id = status.id
+
+select * from sabores
+
+select ps.sabores_id, s.nome 
+from pizza_sabor as ps, sabores as s
+where ps.sabores_id = s.id
+
+select * from pedidos
+
+select * 
+from pedidos 
+order by datapedido asc
+
+
+select count(pedidos.id), status.tipo 
+from pedidos, status 
+where pedidos.status_id = status.id 
+group by status.tipo
+
+
+
+
+
+
+
+
+
+

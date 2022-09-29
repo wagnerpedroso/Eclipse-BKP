@@ -1,0 +1,66 @@
+/* criando banco de dados */
+
+create database pizzaria_senai
+
+
+/* criando as tabelas do banco de dados */
+
+create table sabores ( id serial, nome varchar(100), PRIMARY KEY (id) ) 
+
+create table massas ( id serial PRIMARY KEY, tipo varchar(100) ) 
+
+create table bordas ( id serial PRIMARY KEY, tipo varchar(100) ) 
+
+create table status ( id serial PRIMARY KEY, tipo varchar(100) ) 
+
+create table pizzas ( 
+	id serial PRIMARY KEY, 
+	borda_id serial references bordas(id), 
+	massa_id serial references massas(id) 
+); 
+
+create table pizzas ( 
+	id serial PRIMARY KEY, 
+	borda_id serial,  
+	massa_id serial , 
+	foreign key (borda_id) references massas(id), 
+	foreign key (borda_id) references massas(id) 
+); 
+
+create table pizza_sabor ( 
+	id serial not null PRIMARY KEY, 
+	pizzas_id serial,  
+	sabores_id serial , 
+	foreign key (pizzas_id) references pizzas(id), 
+	foreign key (sabores_id) references sabores(id) 
+); 
+
+
+create table pedidos ( id serial PRIMARY KEY, pizzas_id serial references pizzas(id), status_id serial references status(id) ) 
+
+/* adicionando uma coluna nova com comando ALTER */
+
+alter table pedidos add nome_cliente varchar(100)
+
+/* excluindo uma coluna com comando ALTER */
+
+alter table pedidos drop column nome_cliente  
+
+
+/* adicionando uma coluna nova com comando ALTER */
+
+
+alter table pedidos add data_pedido date
+
+/* alterando o tipo de dado de uma coluna com comando ALTER */
+
+alter table pedidos alter column data_pedido type varchar(8)
+
+
+
+/* começando as inserções com comando INSERT */
+
+insert into sabores (nome) values ('calabresa')
+insert into sabores (nome) values ('4 queijos')
+insert into sabores (nome) values ('sensação')
+insert into sabores (nome) values ("bacon")  << erro aspas dupla

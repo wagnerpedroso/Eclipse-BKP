@@ -1,0 +1,133 @@
+--mostrando mesma pizza com vários sabores e com mesmo número de pedido. 
+
+select * from bordas
+select * from massas
+select * from pedidos
+select * from pizzas
+select * from pizza_sabor
+
+insert into pizzas (borda_id, massa_id) values (1, 2);
+insert into pizza_sabor (pizzas_id, sabores_id) values (3, 2), (3,3);
+insert into pedidos (pizzas_id, status_id) values (3, 1);
+
+select pedidos.id, bordas.tipo, massas.tipo, pizzas.id, sabores.nome
+from pedidos
+inner join pizzas on pedidos.pizzas_id = pizzas.id
+inner join massas on pizzas.massa_id = massas.id
+inner join bordas on pizzas.borda_id = bordas.id
+inner join pizza_sabor on pizzas.id = pizza_sabor.pizzas_id
+inner join sabores on pizza_sabor.sabores_id = sabores.id
+
+--exercício 2 trello
+
+select *
+from tabelaa 
+full join tabelab on tabelaa.nome = tabelab.nome
+where tabelab.nome is null or tabelaa.nome is null
+
+--exercício 3 trello
+
+create table produto (
+	id serial primary key, 
+	nomeprod varchar(20) not null, 
+	tamanho char(3) not null, 
+	preco int not null CHECK (preco > 50)
+);
+
+create table pedidos (
+	id serial primary key,
+	datapedido date not null, 
+	endereco_entrega varchar(50) not null, 
+	formapagamento varchar(30) not null 
+)
+
+create table pedido_produto (
+	id serial primary key,
+	pedido_id int not null,
+	produto_id int not null,
+	foreign key (pedido_id) references pedidos (id),
+	foreign key (produto_id) references produto (id)
+	
+);
+
+
+insert into produto (nomeprod, tamanho, preco) values ('camisa_devinhouse', 'M', 60 ), ('meia', '39', 52 ); 
+insert into produto (nomeprod, tamanho, preco) values ('camisa_devinhouse', 'M', 40 ); --erro pois preco está < 50
+
+--criando um pedido
+insert into pedidos (datapedido, endereco_entrega, formapagamento) values ('20220211', 'rua teste 126', 'débito');
+
+--selecionando produtos no mesmo pedido
+insert into pedido_produto (pedido_id, produto_id) values (1, 2), (1, 3);
+
+
+select pedidos.id, pedidos.datapedido, pedidos.endereco_entrega, pedidos.formapagamento,  produto.nomeprod, produto.tamanho, produto.preco
+from pedidos
+inner join pedido_produto on pedidos.id = pedido_produto.pedido_id
+inner join produto on pedido_produto.produto_id = produto.id
+
+--resolução do desafio. Criação das tabelas e inserts estão no código das aulas anteriores.
+
+select min(salario), max(salario), avg(salario), supervisor
+from empregado
+group by supervisor
+HAVING avg(salario) > 3500 	
+
+--convertendo as médias para inteiro: FUNÇÃO CAST()
+
+select min(salario), max(salario), cast(avg(salario) as int), supervisor
+from empregado
+group by supervisor
+HAVING avg(salario) > 3500 
+
+--resolução exercícios do trello
+
+--exercicio 4
+
+insert into aluno (nome, endereco, idade) values ('gabriel','rua teste', 15)
+insert into aluno (nome, idade) values ('gabriel', 15)
+insert into aluno (endereco, nome ,idade) values ('rua teste', 'gabriel', 15)
+insert into disciplina (nome_disc, carga_horaria) values ('banco de dados', 10), ('.......', 10), ('.......', 10), ('....', 10)
+
+--exercício 9
+
+alter table professor add datanascimento date
+
+--exercicio 10
+
+alter table pedidos alter column datapedido varchar (8)
+
+--exercício 11
+
+delete from nome_tabela where id = 4;
+alter table nome_tabela drop column datapedido;
+
+
+
+--exercício 8
+
+select *
+from aluno
+where nome like '%silva%' or idade > 21
+
+--exercício 7
+
+UPDATE aluno
+SET endereco = 'av. recife 350 PE'
+where id = 2
+
+--exercicio 5
+
+select avg(idade)
+from alunos 
+
+--exercício 6
+
+update aluno
+set idade = 27
+where nome = 'luiz ricardo soares'
+
+
+
+
+

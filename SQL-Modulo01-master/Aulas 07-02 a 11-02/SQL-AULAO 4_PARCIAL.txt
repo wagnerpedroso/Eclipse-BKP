@@ -1,0 +1,15 @@
+create table empregado (
+	id serial, 
+	nome varchar(30), 
+	salario int,
+	supervisor varchar(30), 
+	primary key (id)
+);
+
+select * from empregado
+
+insert into empregado (nome, salario, supervisor) values ('diogo', 2000, 'carlos'), 
+('gabriel', 5000, 'joao'), ('sérgio', 15000, 'patrick'), ('ana', 7500, 'carlos'), 
+('abigail', 3000, 'joao'), ('joana', 24000, 'patrick'), ('felipe', 2300, 'carlos'), 
+('edson', 1500, 'joao'), ('roberta', 6000, 'patrick');
+

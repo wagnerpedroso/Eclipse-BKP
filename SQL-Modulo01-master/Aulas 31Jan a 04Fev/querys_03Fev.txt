@@ -1,0 +1,85 @@
+
+/*CRIANDO O BANCO*/
+
+CREATE DATABASE pizzaria;
+
+
+/*CRIANDO AS TABELAS*/
+
+CREATE TABLE massas (
+	idMassa serial NOT NULL PRIMARY KEY,
+	nomeMassa VARCHAR(40) NOT NULL 
+	);
+
+CREATE TABLE sabores (
+	idSabores serial NOT NULL PRIMARY KEY,
+	nomeSabores VARCHAR(40) NOT NULL 
+	);
+
+CREATE TABLE status (
+	idStatus serial NOT NULL PRIMARY KEY,
+	tipoStatus VARCHAR(40) NOT NULL 
+	);
+
+CREATE TABLE pizzas (
+	idPizzas serial,
+	idMassa INTEGER,
+	idSabores INTEGER,
+	PRIMARY KEY (idPizzas),
+	FOREIGN KEY (idMassa) REFERENCES massas(idMassa),
+	FOREIGN KEY (idSabores) REFERENCES sabores(idSabores)
+	);
+
+CREATE TABLE pedidos (
+	idPedido serial,
+	idPizzas INTEGER,
+	idStatus INTEGER,
+	PRIMARY KEY (idPedido),
+	FOREIGN KEY (idPizzas) REFERENCES pizzas(idPizzas),
+	FOREIGN KEY (idStatus) REFERENCES status(idStatus)
+	);
+
+
+/*INSERIR REGISTROS NO BANCO DE DADOS*/
+
+INSERT INTO massas (nomeMassa) 
+VALUES ('Massa comum'),('Massa integral'),('Massa temperada');
+
+INSERT INTO sabores (nomeSabores)
+VALUES ('Quatro Queijos'),('Frango com Catupiry'),('Calabresa'),('Lombinho'),
+('Filé com Cheddar'),('Portuguesa'),('Marguerita');
+
+INSERT INTO status (tipoStatus)
+VALUES ('Em produção'),('Entrega'),('Conluído');
+
+INSERT INTO pizzas (idMassa,idSabores)
+VALUES (2,4),(1,6),(1,3),(3,2);
+
+INSERT INTO pedidos (idPizzas,idStatus)
+VALUES (1,2),(2,1),(3,3),(4,1);
+
+
+/*CONSULTAR OS PEDIDOS*/
+
+SELECT * FROM pedidos;
+
+SELECT pedidos.idPedido, massas.nomeMassa, sabores.nomeSabores, status.tipoStatus
+FROM pedidos
+INNER JOIN pizzas 
+ON pizzas.idPizzas = pedidos.idPizzas
+INNER JOIN sabores
+ON pizzas.idSabores = sabores.idSabores
+INNER JOIN massas
+ON pizzas.idMassa = massas.idMassa
+INNER JOIN status
+ON pedidos.idStatus = status.idStatus;
+
+
+
+
+
+
+
+
+
+
